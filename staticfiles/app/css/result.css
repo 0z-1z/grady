@@ -1,0 +1,148 @@
+/* styles/result.css */
+.result {
+  width: 1240px;
+  margin: auto;
+  padding: 32px;
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.result__school-info {
+  display: flex;
+  align-items: center;
+}
+
+.result__school-info img {
+  width: 240px;
+  height: 240px;
+}
+
+.result__school-info p {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 0.625rem;
+}
+
+.result__school-name {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.result__school-motto {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.result__school-contact {
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  gap: 2%;
+}
+
+.result__school-contact > * {
+  flex-basis: 48%;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.result__student-info {
+  display: flex;
+  align-items: center;
+  gap: 128px;
+  padding-block: 16px;
+}
+
+.result__student-info img {
+  width: 240px;
+  height: 240px;
+  margin-left: auto;
+}
+
+.result__student-title-grid,
+.result__student-value-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 24px;
+}
+
+.result__student-title-grid p {
+  font-weight: 800;
+}
+
+.result__student-value-grid {
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* Table Styles */
+.result-view__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 24px;
+  table-layout: fixed;
+}
+
+.result-view__table th,
+.result-view__table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.result-view__table th {
+  background-color: #E0E0E0;
+  /* Light Gray */
+  font-weight: 800;
+  color: #555;
+}
+
+.result-view__table tr:nth-child(even) {
+  background-color: #F7F7F7;
+  /* Lighter Gray */
+}
+
+.result-view__table tr:hover {
+  background-color: #FAFAFA;
+  /* Slight hover effect */
+}
+
+.result__summary {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-block: 16px;
+}
+
+.result__summary p {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.result__summary .summary__title,
+.result__summary .summary__value {
+  font-size: 24px;
+}
+
+.result__summary .summary__title {
+  font-weight: 800;
+}
+
+.result__summary .summary__value {
+  font-weight: 400;
+}
