@@ -1,0 +1,82 @@
+{% extends 'app/base.html' %} {% block content %}
+<div class="page">
+    <h2 class="page__title">Dashboard</h2>
+
+    {% if messages %} {% for message in messages %} {% if message.level == 40 %}
+    <div id="error" class="modal">
+        <div class="dialog dialog--error">
+            <p>{{ message }}</p>
+
+            <button class="button error" onclick="toggleModal('error')">Ok</button>
+        </div>
+    </div>
+    {% elif message.level == 25 %}
+    <div id="success" class="modal">
+        <div class="dialog dialog--success">
+            <p>{{ message }}</p>
+            <button class="button primary" onclick="toggleModal('success')">Ok</button>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %} {% endif %}
+
+    <form id="dashboard__form" method="get" class="form">
+        <div class="form__field form__field--primary form__field--50">
+            <label for="session">Session</label>
+            <select name="session" id="session" class="select primary">
+                {% for session in sessions %}
+                <option value="{{ session }}">{{ session }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form__field form__field--primary form__field--50">
+            <label for="term">Term</label>
+            <select name="term" id="term" class="select primary">
+                {% for term in terms %}
+                <option value="{{ term }}">{{ term }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form__field form__field--primary">
+            <label for="permission">Class Subject</label>
+            <select name="permission" id="permission" class="select primary">
+                {% for permission in permissions %}
+                <option value="{{ permission }}">{{ permission.class_assigned }} : {{ permission.subject }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button id="submitBtn" type="submit" class="button tetiary">Go to Grade Editor</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("submitBtn").addEventListener("click", function (event) {
+                // Prevent the form from submitting immediately
+                event.preventDefault();
+
+                // Get selected values from the dropdowns
+                const session = document.getElementById("session").value;
+                const term = document.getElementById("term").value;
+                const permission = document.getElementById("permission").value.split("-");
+
+                if (permission[0]) {
+                    // Contains a value
+                    window.location.href = `/grade-editor/${permission[0]}/${session}/${term}/${permission[1]}/${permission[2]}/`;
+                } else {
+                    let error = document.getElementById("error");
+                    if (error) error.classList.add("modal--fade-in");
+                }
+            });
+
+            let error = document.getElementById("error");
+            let success = document.getElementById("success");
+
+            if (error) error.classList.add("modal--fade-in");
+            if (success) success.classList.add("modal--fade-in");
+        });
+    </script>
+</div>
+{% endblock %}

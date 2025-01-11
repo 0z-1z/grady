@@ -1,0 +1,59 @@
+{% extends 'app/base.html' %} {% load static %} {% block head %}
+<link rel="stylesheet" href="{% static 'app/css/result.css' %}" />
+{% endblock %} {% block content %}
+<div class="page">
+    <h2 class="page__title">Result Checker</h2>
+
+    <!-- Error Messages -->
+    {% if messages %}
+    <div id="error" class="modal">
+        <div class="dialog dialog--error">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            <button class="button error" onclick="toggleModal('error')">Ok</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post" action="{% url 'result_checker' %}" class="form">
+        {% csrf_token %}
+        <div class="form__field form__field--primary form__field--50">
+            <label for="session">Session</label>
+            <select name="session" id="session" class="select primary">
+                {% for session in sessions %}
+                <option value="{{ session }}">{{ session }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form__field form__field--primary form__field--50">
+            <label for="term">Term</label>
+            <select name="term" id="term" class="select primary">
+                {% for term in terms %}
+                <option value="{{ term }}">{{ term }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form__field form__field--primary form__field--50">
+            <label for="admission_number">Admission Number</label>
+            <input class="input" type="text" name="admission_number" id="admission_number" required />
+        </div>
+
+        <div class="form__field form__field--primary form__field--50">
+            <label for="token">Token</label>
+            <input class="input" type="text" name="pin" id="token" required />
+        </div>
+
+        <button type="submit" class="button tetiary">Check Result</button>
+    </form>
+</div>
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let error = document.getElementById("error");
+        if (error) error.classList.add("modal--fade-in");
+    });
+</script>
+{% endblock %} {% endblock %}

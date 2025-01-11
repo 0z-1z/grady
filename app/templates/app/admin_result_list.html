@@ -1,0 +1,75 @@
+{% extends 'app/base.html' %} {% block content %}
+<div class="page">
+    <h2 class="page__title">Results</h2>
+
+    <div style="padding-inline: 10px">
+        <p style="color: var(--clr-secondary)">Showing {{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ page_obj.paginator.count }}</p>
+    </div>
+
+    <form method="post" id="form" class="form" style="align-items: stretch; flex-wrap: no-wrap">
+        {% csrf_token %}
+        <div class="viewport" style="padding-inline: 0">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th>Session</th>
+                        <th>Term</th>
+                        <th>Class</th>
+                        <th>Position</th>
+                        <th>Average</th>
+                        <th>View</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>{{ page_obj.start_index|add:forloop.counter0 }}. {{ result.student.name }}</td>
+                        <td>{{ result.session.name }}</td>
+                        <td>{{ result.term }}</td>
+                        <td>{{ result.student.class_assigned.name }}</td>
+                        <td>{{ result.class_position }}</td>
+                        <td>{{ result.average_score }}</td>
+                        <td><a href="{% url 'result' result.id %}" class="button tetiary-container">View</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Hidden Inputs for Pagination -->
+        <input type="hidden" name="current_page" value="{{ page_obj.number }}" />
+        <input type="hidden" name="total_pages" value="{{ page_obj.paginator.num_pages }}" />
+        <input type="hidden" name="page" id="page" />
+        <input type="hidden" name="session" value="{{ session }}" />
+        {% for term_id in term_ids %}
+        <input type="hidden" name="term" value="{{ term_id }}" />
+        {% endfor %} {% for class_id in class_ids %}
+        <input type="hidden" name="class" value="{{ class_id }}" />
+        {% endfor %}
+        <input type="hidden" name="student_name" value="{{ student_name }}" />
+
+        <a style="margin-top: 0.625rem" href="{% url 'admin_dashboard' %}" class="button error">Exit</a>
+    </form>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        {% if page_obj.has_previous %} <button class="button primary" onclick="submitForm(event)"><span class="material-icons">chevron_left</span></button> {% endif %} <span class="pagination__current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span> {% if page_obj.has_next %}
+        <button id="next" class="button primary" onclick="submitForm(event)"><span class="material-icons">chevron_right</span></button> {% endif %}
+    </div>
+</div>
+
+{% block script %}
+<script>
+    function submitForm(event) {
+        // Prevent the form from submitting immediately
+        event.preventDefault();
+        let page = document.getElementById("page")
+        if (event.target.id === "next") page.value = {% if page_obj.has_next %}  {{ page_obj.next_page_number }} {% else %} 1 {% endif %}
+        else page.value = {% if page_obj.has_previous %} {{ page_obj.previous_page_number }} {% else %} 1 {% endif %}
+
+        let form = document.getElementById("form")
+        form.submit()
+    }
+</script>
+{% endblock %} {% endblock %}

@@ -1,0 +1,101 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#282d3c" />
+        <title>Grady | Result</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="{% static 'app/css/styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/components.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/result.css' %}" />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+        </style>
+    </head>
+    <body style="padding: 32px; width: fit-content">
+        <div class="result">
+            <div class="result__school-info">
+                {% if result.school.logo %}
+                <img src="{{ result.school.logo }}" alt="School Logo" />
+                {% endif %}
+                <p>
+                    <span class="result__school-name">{{ result.school.name }}</span>
+                    <span class="result__school-motto">{{ result.school.motto }}</span>
+                    <span class="result__school-contact">
+                        <span>Address: {{ result.school.address }}</span>
+                        <span>Email: {{ result.school.email }}</span>
+                        <span>Mobile 1: {{ result.school.mobile }}</span>
+                        <span>Mobile 2: {{ result.school.mobile_alt }}</span>
+                    </span>
+                </p>
+            </div>
+
+            <div class="result__student-info">
+                <div class="result__student-title-grid">
+                    <p>Name:</p>
+                    <p>Admission Number:</p>
+                    <p>Class:</p>
+                    <p>Gender</p>
+                    <p>Date of Birth:</p>
+                    <p>Session:</p>
+                    <p>Term:</p>
+                </div>
+                <div class="result__student-value-grid">
+                    <p>{{ result.student.name }}</p>
+                    <p>{{ result.student.admission_number }}</p>
+                    <p>{{ result.student.class_assigned }}</p>
+                    <p>{{ result.student.gender }}</p>
+                    <p>{{ result.student.date_of_birth }}</p>
+                    <p>{{ result.session }}</p>
+                    <p>{{ result.term }}</p>
+                </div>
+                {% if result.student.photo %}
+                <img src="{{ result.student.photo }}" alt="Student Photo" />
+                {% endif %}
+            </div>
+
+            <table class="result-view__table">
+                <thead>
+                    <tr>
+                        <th style="width: 300px">Subject</th>
+                        <th>CA</th>
+                        <th>Exam</th>
+                        <th>Total</th>
+                        <th>Position</th>
+                        <th>Grade</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                    <tr>
+                        <td>{{ grade.subject.name }}</td>
+                        <td>{{ grade.ca_score }}</td>
+                        <td>{{ grade.exam_score }}</td>
+                        <td>{{ grade.total_score }}</td>
+                        <td>{{ grade.position }}</td>
+                        <td>{{ grade.letter_grade }}</td>
+                        <td>{{ grade.remark }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="result__summary">
+                <p>
+                    <span class="summary__value">{{ result.total_score }}</span>
+                    <span class="summary__title">Total</span>
+                </p>
+                <p>
+                    <span class="summary__value">{{ result.average_score }}</span>
+                    <span class="summary__title">Average</span>
+                </p>
+                <p>
+                    <span class="summary__value">{{ result.class_position }}</span>
+                    <span class="summary__title">Position</span>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

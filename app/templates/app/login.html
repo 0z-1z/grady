@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %} {% block content %}
+<div class="page">
+    <h2 class="page__title">Login</h2>
+
+    <!-- Error Messages -->
+    {% if messages %}
+    <div id="error" class="modal">
+        <div class="dialog dialog--error">
+            {% for message in messages %}
+            <p>{{ message }}</p>
+            {% endfor %}
+            <button class="button error" onclick="toggleModal('error')">Ok</button>
+        </div>
+    </div>
+    {% endif %}
+
+    <form method="post" class="form">
+        {% csrf_token %}
+        <div class="form__field form__field--primary">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required class="input" />
+        </div>
+
+        <div class="form__field form__field--primary">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required class="input" />
+        </div>
+
+        <button type="submit" class="button tetiary">Submit</button>
+    </form>
+</div>
+{% block script %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let error = document.getElementById("error");
+        if (error) error.classList.add("modal--fade-in");
+    });
+</script>
+{% endblock %} {% endblock %}

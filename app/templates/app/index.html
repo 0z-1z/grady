@@ -1,0 +1,126 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="theme-color" content="#282d3c" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Grady - Simplifying School Grading</title>
+        <link rel="stylesheet" href="{% static 'app/css/index.css' %}" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+        </style>
+    </head>
+    <body>
+        <!-- Header Section -->
+        <header class="header">
+            <div class="header__content">
+                <h1>Grady</h1>
+                <p>Your solution to smarter school grading</p>
+                <div class="header__controls">
+                    <a href="{% url 'login' %}" class="button tetiary">Login</a>
+                    <a href="{% url 'result_checker' %}" class="button tetiary-container">Check Result</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Carousel Hero Section -->
+        <!--<section class="carousel">
+            <div class="carousel__container">
+                <div class="carousel__slide active">
+                    <div class="carousel__content">
+                        <h1>Grady</h1>
+                        <p>Your solution to smarter school management.</p>
+                        <a href="{% url 'login' %}" class="button primary">Login</a>
+                        <a href="#features" class="button secondary">Get Started</a>
+                    </div>
+                    <img src="{% static 'app/images/1.jpeg' %}" alt="School Management" />
+                </div>
+                <div class="carousel__slide">
+                    <div class="carousel__content">
+                        <h1>Empower Educators</h1>
+                        <p>Streamline grading, results, and administration.</p>
+                        <a href="#features" class="button primary">Learn More</a>
+                    </div>
+                    <img src="{% static 'app/images/2.jpeg' %}" alt="Empowering Teachers" />
+                </div>
+                <div class="carousel__slide">
+                    <div class="carousel__content">
+                        <h1>Engage Parents</h1>
+                        <p>Securely access student results and progress.</p>
+                        <a href="#how-to" class="button secondary">How It Works</a>
+                    </div>
+                    <img src="{% static 'app/images/3.jpeg' %}" alt="Parent Engagement" />
+                </div>
+            </div>
+            <div class="carousel__controls">
+                <span class="material-icons carousel__control prev">chevron_left</span>
+                <span class="material-icons carousel__control next">chevron_right</span>
+            </div>
+        </section>-->
+
+        <!-- Features Section -->
+        <section id="features" class="features">
+            <h2>Features</h2>
+            <div class="features__cards">
+                <div class="features__card secondary fade-in">
+                    <span class="material-icons">grading</span>
+                    <h3>Grading System</h3>
+                    <p>Streamlined grading with continuous assessment and exam scores.</p>
+                </div>
+                <div class="features__card fade-in">
+                    <span class="material-icons">assessment</span>
+                    <h3>Result Management</h3>
+                    <p>Generated final results with average, positions, and letter grades.</p>
+                </div>
+                <div class="features__card tetiary fade-in">
+                    <span class="material-icons">lock</span>
+                    <h3>Secure Access</h3>
+                    <p>Use secure tokens to view results anytime, anywhere.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission and Vision Section -->
+        <section id="mission" class="mission">
+            <div class="mission__content fade-in">
+                <h2>Our Mission</h2>
+                <p>To empower schools with a simple, efficient platform for managing student results.</p>
+            </div>
+            <div class="vision__content fade-in">
+                <h2>Our Vision</h2>
+                <p>To be the go-to platform for result management, trusted by schools worldwide.</p>
+            </div>
+        </section>
+
+        <!-- How-To Section -->
+        <section id="how-to" class="how-to">
+            <h2>How It Works</h2>
+            <div class="how-to__steps">
+                <div class="how-to__step secondary fade-in">
+                    <span class="material-icons">login</span>
+                    <h3>Step 1</h3>
+                    <p>Login to your dashboard as an admin, or teacher</p>
+                </div>
+                <div class="how-to__step tetiary fade-in">
+                    <span class="material-icons">edit</span>
+                    <h3>Step 2</h3>
+                    <p>Admins manage result generation with just a click; teachers grade subjects of classes based on permissions.</p>
+                </div>
+                <div class="how-to__step tetiary-container fade-in">
+                    <span class="material-icons">school</span>
+                    <h3>Step 3</h3>
+                    <p>Effortlessly manage result data and improve efficiency.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <p>&copy; 2025 Grady. All Rights Reserved.</p>
+        </footer>
+
+        <script src="{% static 'app/js/index.js' %}"></script>
+    </body>
+</html>

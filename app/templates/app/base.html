@@ -1,0 +1,56 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#282d3c" />
+        <title>Grady</title>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link rel="stylesheet" href="{% static 'app/css/styles.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/components.css' %}" />
+        {% block head %} {% endblock %}
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+        </style>
+    </head>
+    <body>
+        <header class="header">
+            {% if user.is_authenticated %}
+            <div class="header__account-info">
+                {% if user.photo %}
+                <div class="avatar">
+                    <img src="{{ user.photo.url }}" onclick="toggleModal('user-avatar-dialog')" />
+                    <div id="user-avatar-dialog" class="modal">
+                        <div class="dialog dialog--success">
+                            <img src="{{ user.photo.url }}"/>
+                            <p>School: {{ user.school }}</p>
+                            <p>User: {{ user.username }}</p>
+                            <button class="button primary" onclick="toggleModal('user-avatar-dialog')">Ok</button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <p class="account-info__details">
+                    <span class="account-info__name">{{ user.first_name }} {{ user.last_name}}</span>
+                    <span class="account-info__designation">{{ user.role | capfirst }}</span>
+                </p>
+            </div>
+            {% else %}
+            <h1 class="header__title">Grady</h1>
+            {% endif %} {% if user.is_authenticated %}
+            <a href="{% url 'logout' %}" class="header__logout"> <span class="material-icons">logout</span></a>
+            {% endif %}
+        </header>
+
+        <main class="main-content">{% block content %} {% endblock %}</main>
+
+        <footer class="footer">
+            <p>&copy; 2025 Grady. All rights reserved.</p>
+        </footer>
+
+        <script src="{% static 'app/js/components.js' %}"></script>
+        {% block script %} {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,99 @@
+{% extends 'app/base.html' %} {% block content %}
+<div class="page">
+    <h2 class="page__title">{{ class_name }} >> {{ subject_name }}</h2>
+
+    {% if messages %} {% for message in messages %} {% if message.level == 40 %}
+    <div id="error" class="modal">
+        <div class="dialog dialog--error">
+            <p>{{ message }}</p>
+
+            <button class="button error" onclick="toggleModal('error')">Ok</button>
+        </div>
+    </div>
+    {% elif message.level == 25 %}
+    <div id="success" class="modal">
+        <div class="dialog dialog--success">
+            <p>{{ message }}</p>
+            <button class="button primary" onclick="toggleModal('success')">Ok</button>
+        </div>
+    </div>
+    {% endif %} {% endfor %} {% endif %}
+
+    <div style="padding-inline: 10px">
+        <p>Max CA Score: {{ scoring_scheme.max_ca_score }}</p>
+        <p>Max Exam Score: {{ scoring_scheme.max_exam_score }}</p>
+        <p style="color: var(--clr-secondary)">Showing {{ page_obj.start_index }} - {{ page_obj.end_index }} of {{ page_obj.paginator.count }}</p>
+    </div>
+
+    <form method="post" class="grade-editor__form">
+        {% csrf_token %}
+        <div class="viewport">
+            <table class="grade-editor__table">
+                <thead>
+                    <tr>
+                        <th>Student</th>
+                        <th style="width: 74px">CA</th>
+                        <th style="width: 74px">Exam</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for grade in grades %}
+                    <tr>
+                        <td>
+                            <div style="display: flex; flex-direction: column; gap: 0.625rem">
+                                <div class="avatar" style="border: none">
+                                    <img src="{{ grade.student.photo }}" onclick="toggleModal('{{ grade.student.id }}-avatar-dialog')" />
+                                    <div id="{{ grade.student.id }}-avatar-dialog" class="modal">
+                                        <div class="dialog dialog--success">
+                                            <img src="{{ grade.student.photo }}" />
+                                            <p>Reg No: {{ grade.student.admission_number }}</p>
+                                            <span class="button primary" onclick="toggleModal('{{ grade.student.id }}-avatar-dialog')">Ok</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{ page_obj.start_index|add:forloop.counter0 }}. {{ grade.student.name }}
+                            </div>
+                        </td>
+                        <td><input type="number" name="ca_score_{{ grade.student.id }}" value="{{ grade.ca_score }}" min="0" max="{{ scoring_scheme.max_ca_score }}" class="input" /></td>
+                        <td><input type="number" name="exam_score_{{ grade.student.id }}" value="{{ grade.exam_score }}" min="0" max="{{ scoring_scheme.max_exam_score }}" class="input" /></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Hidden Inputs for Pagination -->
+        <input type="hidden" name="current_page" value="{{ page_obj.number }}" />
+        <input type="hidden" name="total_pages" value="{{ page_obj.paginator.num_pages }}" />
+        <!-- Buttons -->
+        <div class="grade-editor__controls">
+            <button type="submit" name="save" class="button tetiary">Save</button>
+            {% if page_obj.has_next %}
+            <button type="submit" name="save_next" class="button tetiary-container"><span>Save</span><span class="material-icons">chevron_right</span></button> {% endif %}
+            <a href="{% url 'teacher_dashboard' %}" class="button error">Exit</a>
+        </div>
+    </form>
+
+    <!-- Pagination Controls -->
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}" class="button primary"><span class="material-icons">chevron_left</span></a>
+        {% endif %}
+        <span class="pagination__current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}" class="button primary"><span class="material-icons">chevron_right</span></a>
+        {% endif %}
+    </div>
+</div>
+{% block script %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let error = document.getElementById("error");
+        let success = document.getElementById("success");
+
+        if (error) error.classList.add("modal--fade-in");
+        if (success) success.classList.add("modal--fade-in");
+    });
+</script>
+{% endblock %} {% endblock %}

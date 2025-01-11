@@ -1,0 +1,25 @@
+{% extends 'app/base.html' %} {% block content %}
+<div class="page">
+    <h2 class="page__title">Permissions</h2>
+    <form class="form" method="post">
+        {% csrf_token %}
+        <div class="form__field form__field--primary">
+            <label for="class">Class</label>
+            <select multiple name="class" id="class" class="select primary">
+                {% for class in classes %}
+                <option value="{{ class }}">{{ class }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form__field form__field--primary">
+            <label for="subject">Subject</label>
+            <select multiple name="subject" id="subject" class="select primary">
+                {% for subject in subjects %}
+                <option value="{{ subject }}">{{ subject }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="button tetiary">View</button>
+    </form>
+</div>
+{% endblock %}
